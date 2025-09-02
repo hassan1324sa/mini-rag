@@ -7,7 +7,8 @@ class DataController(BaseController):
     
     def validateUploadedFiles(self,file:UploadFile):
         if (file.content_type in self.appSettings.FILE_ALLOWED_EXTNSTIONS) and (file.size <= (self.appSettings.FILE_MAX_SIZE*self.sizeScale)):
-            return True
+            return True,"success"
 
         else:
-            return False
+            return False ,"file type is not supported or file size exceeded"
+        
