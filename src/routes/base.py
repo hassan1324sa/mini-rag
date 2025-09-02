@@ -1,6 +1,5 @@
-from fastapi import FastAPI,APIRouter
-import os 
-
+from fastapi import FastAPI,APIRouter,Depends
+from helpers.config import getSettings,Settings
 
 
 baseRouter = APIRouter(
@@ -8,8 +7,8 @@ baseRouter = APIRouter(
 )
 
 @baseRouter.get("/")
-def welcome():
-    Name=os.getenv("APP_NAME")
+async def welcome(appSettings:Settings=Depends(getSettings)):
+
     return{
-        "message":Name
+        "name":appSettings.APP_NAME
     }
