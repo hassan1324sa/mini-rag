@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from routes  import base
 from routes  import data
-
+import os 
 
 app = FastAPI(title="Mini Rag ", version="0.1")
 app.include_router(base.baseRouter)
