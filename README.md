@@ -60,7 +60,3 @@ $ sudo docker compose up -d
 ```bash
 $ uvicorn main:app --reload --host 0.0.0.0 --port 5000
 ```
-
-## POSTMAN Collection
-
-Download the POSTMAN collection from [/assets/mini-rag-app.postman_collection.json](/assets/mini-rag-app.postman_collection.json)
