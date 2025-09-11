@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from routes  import base,data
 from helpers.config import getSettings
 from motor.motor_asyncio import AsyncIOMotorClient
+
+
 app = FastAPI(title="Mini Rag ", version="0.1")
 
 @app.on_event("startup")
