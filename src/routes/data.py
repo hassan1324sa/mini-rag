@@ -10,8 +10,10 @@ from models import ResponseSignal
 import logging
 from .schemes.data import ProcessRequest
 from models.projectModdel import ProjectModel
-from models.dbSchemes import DataChunk
+from models.dbSchemes import DataChunk,Asset
+from models.assetModel import AssetModel
 from models.chunkModel import ChunkModel
+from models.enums.assetTypeEnum import AssetTypeEnum
 
 
 logger = logging.getLogger("uvicorn.error")
@@ -24,7 +26,7 @@ dataRouter = APIRouter(
 async def upload(request:Request,projectId:str,file:UploadFile,appSettings:Settings=Depends(getSettings)):
 
     dbClient =request.app.db_client
-    projectModel = ProjectModel(dbClient=dbClient)
+    projectModel = await ProjectModel.createInstance(dbClient=dbClient)
 
 
     project = await projectModel.getProjectOrCreateOne(projectId=projectId)
@@ -53,11 +55,13 @@ async def upload(request:Request,projectId:str,file:UploadFile,appSettings:Setti
     
         logger.error(f"Error While uploading file : {e}")
 
-        JSONResponse(status_code=status.HTTP_400_BAD_REQUEST,content={"signal":ResponseSignal.FileUploadedFailed.value})  
 
-        return 
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST,content={"signal":ResponseSignal.FileUploadedFailed.value})  
+    assetModel = await AssetModel.createInstance(dbClient=dbClient)
+    assetResource = Asset(assetProjectId=project.id,assetType=AssetTypeEnum.FILE.value,assetName=fileId,assetSize=os.path.getsize(filePath))
+    assetRecord = await assetModel.createAsset(asset=assetResource)
 
-    return JSONResponse(content={"signal":signal,"fileId":fileId,}) 
+    return JSONResponse(content={"signal":signal,"fileId":str(assetRecord.id)}) 
 
 
 @dataRouter.post("/process/{projectId}")
@@ -70,7 +74,7 @@ async def processEndpoint(request:Request,projectId:str,processReq:ProcessReques
     doReset = processReq.doReset
 
     dbClient = request.app.db_client
-    projectModel = ProjectModel(dbClient=dbClient)
+    projectModel =await ProjectModel.createInstance(dbClient=dbClient)
     project = await projectModel.getProjectOrCreateOne(projectId=projectId)
 
 
@@ -83,7 +87,7 @@ async def processEndpoint(request:Request,projectId:str,processReq:ProcessReques
         return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST,content={"signal":ResponseSignal.PROCESSING_FAILED})
     
     fileChunksRecords = [DataChunk(chunkText=chunk.page_content,chunkMetaData=chunk.metadata,chunkOrder=i+1,chunkProjectId=project.id) for i,chunk in enumerate(fileChunks)]
-    chunkModel = ChunkModel(dbClient=dbClient)
+    chunkModel = await ChunkModel.createInstance(dbClient=dbClient)
     if doReset==1:
         await chunkModel.deleteChunksByProjectId(projectId=project.id)
     noRecorders = await chunkModel.insertManyChunks(chunks=fileChunksRecords)

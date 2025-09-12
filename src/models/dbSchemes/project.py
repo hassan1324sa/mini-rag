@@ -17,3 +17,13 @@ class Project(BaseModel):
         arbitrary_types_allowed=True
         allow_population_by_field_name = True
 
+    @classmethod
+    def getIndexes(cls):
+        return [
+            {
+                "key":[("projectId",1)],
+                "name":"projectIdIndex1",
+                "unique":True,
+            }
+        ]
+
