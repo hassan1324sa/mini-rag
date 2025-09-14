@@ -8,6 +8,7 @@ class DataChunk(BaseModel):
     chunkMetaData:dict
     chunkOrder:int = Field(...,gt=0)
     chunkProjectId:ObjectId
+    chunkAssetId:ObjectId
 
 
     class Config:

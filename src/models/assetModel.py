@@ -28,14 +28,26 @@ class AssetModel(BaseDataModel):
                     unique=index["unique"]
                 )
     
-    async def createAsset(self,asset:Asset):
+    async def createAsset(self,asset:Asset,):
         
         result = await self.collection.insert_one(asset.dict(by_alias=True,exclude_unset=True))
 
         asset.id = result.inserted_id
         return asset
 
-    async def getAllProjectAssets(self,assetProjectId):
-        return await self.collection.find(
-                {"assetProjectId":ObjectId(assetProjectId) if isinstance(assetProjectId,str)else assetProjectId}
-            ).to_list(length=None)
+    async def getAllProjectAssets(self,assetProjectId:str,assetType:str):
+        records =  await self.collection.find(
+                {"assetProjectId":ObjectId(assetProjectId) if isinstance(assetProjectId,str)else assetProjectId,
+                "assetType":assetType
+                }
+            ).to_list(length=None,)
+        return [Asset(**i) for i in records]
+    
+    async def getAssetRecord(self,assetProjectId:str,assetName:str):
+        record = await self.collection.find_one({"assetProjectId":ObjectId(assetProjectId) if isinstance(assetProjectId,str)else assetProjectId,
+                                                "assetName":assetName})
+        if record:
+            return Asset(**record)
+        else :
+            return None
+        

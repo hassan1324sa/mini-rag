@@ -21,15 +21,19 @@ class ProcessController(BaseController):
     def getFileLoader(self,fileId:str,):
         fileExt =self.getFileExtension(fileId)
         filePath = os.path.join(self.projectPath,fileId)
+        if not os.path.exists(filePath):
+            return None
+
         if fileExt == ProcessingEnum.TXT.value:
             return TextLoader(filePath,encoding="utf-8")
+        
         if fileExt == ProcessingEnum.PDF.value:
             return PyMuPDFLoader(filePath)
         return None
     
     def getFileContent(self,fileId:str):
         loader  = self.getFileLoader(fileId=fileId)
-        return loader.load()
+        return loader.load() if loader else None
     
     def processFileContent(self,fileContent:list,fileId:str,chunkSize:int=100,overlapSize:int=20):
         
