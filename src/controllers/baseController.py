@@ -5,8 +5,17 @@ class BaseController:
         self.appSettings=getSettings()
         self.baseDir = os.path.dirname( os.path.dirname(__file__) )
         self.filesDir= os.path.join(self.baseDir,"assets/files")
-    
+        self.databaseDir = os.path.join(
+            self.baseDir,
+            "assets/database"
+        )
 
         
     def generateRandomString(self,length:int=12):
         return ''.join(random.choices(string.ascii_lowercase+string.digits,k=length))
+    
+    def getDatabasePath(self,dbName):
+        databasePath=os.path.join(self.databaseDir,dbName)
+        if not os.path.exists(databasePath):
+            os.mkdir(path=databasePath)
+        return databasePath
