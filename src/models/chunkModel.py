@@ -54,5 +54,14 @@ class ChunkModel(BaseDataModel):
             "chunkProjectId":projectId
         })
         return result.deleted_count
+<<<<<<< HEAD
 
+=======
+    
+    async def getProjectChunks(self,projectId,pageNo:int=1,pageSize:int=50):
+        results = await self.collection.find({
+            "chunkProjectId":projectId,
+        }).skip((pageNo-1)* pageSize).limit(pageSize).to_list(length=None)
+        return [DataChunk(**record) for record in results ]
+>>>>>>> 03fc06c (Initial commit)
     

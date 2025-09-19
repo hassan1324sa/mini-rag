@@ -1,5 +1,9 @@
 from abc import abstractmethod,ABC
 from typing import List
+<<<<<<< HEAD
+=======
+from models.dbSchemes import RetrieveDocs
+>>>>>>> 03fc06c (Initial commit)
 
 class VectorDBInterFace(ABC):
     def __init__(self):
@@ -41,7 +45,11 @@ class VectorDBInterFace(ABC):
     def insertMany(self,collectionName:str,texts:str,vector:list,metadata:dict=None,recordIds:str=None,batchSize:int=50):
         pass
     @abstractmethod
+<<<<<<< HEAD
     def searchByVector(self, collectionName: str, vector: list, limit: int):
+=======
+    def searchByVector(self, collectionName: str, vector: list, limit: int)->List[RetrieveDocs]:
+>>>>>>> 03fc06c (Initial commit)
         pass
 
 

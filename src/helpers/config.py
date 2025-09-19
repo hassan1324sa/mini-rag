@@ -29,6 +29,12 @@ class Settings(BaseSettings):
     VECTOR_DB_PATH : str
     VECTOR_DB_DISTANCE_METHOD: str = None
 
+<<<<<<< HEAD
+=======
+    PRIMARY_LANG :str
+    DEFAULT_LANG :str
+
+>>>>>>> 03fc06c (Initial commit)
     class Config:
         env_file=".env"
         env_file_encoding = "utf-8"
