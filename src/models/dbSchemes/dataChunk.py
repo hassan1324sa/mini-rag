@@ -22,12 +22,8 @@ class DataChunk(BaseModel):
                 "name":"chunkProjectIdIndex1",
                 "unique":False,
             }
-<<<<<<< HEAD
-        ]
-=======
         ]
 
 class RetrieveDocs(BaseModel):
     text:str
     score:float
->>>>>>> 03fc06c (Initial commit)

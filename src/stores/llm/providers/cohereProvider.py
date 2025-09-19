@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 from llmInterface import LLmInterface
 from llmEnum import CohereEnum,DocumentTypeEnum
-=======
 from ..llmInterface import LLmInterface
 from ..llmEnum import CohereEnum,DocumentTypeEnum
->>>>>>> 03fc06c (Initial commit)
 import cohere
 import logging
 
@@ -22,10 +19,7 @@ class CohereProvider(LLmInterface):
         self.embeddingModelId = None
         self.embeddingSize = None
         self.client = cohere.Client(api_key=apiKey)
-<<<<<<< HEAD
-=======
         self.enums = CohereEnum
->>>>>>> 03fc06c (Initial commit)
         self.logger = logging.getLogger(__name__)
     
     def setGenerationModel(self, modelId):
@@ -42,13 +36,8 @@ class CohereProvider(LLmInterface):
     def generateText(self,chatHistory:list, prompt, maxOutputToken:int = None, temp:float=None):
         if not self.client:
             self.logger.error("cohere was not set ")
-<<<<<<< HEAD
-        
-        if not self.embeddingModelId:
-=======
             
         if not self.generationModelId:
->>>>>>> 03fc06c (Initial commit)
             self.logger.error("Model Id was not set ")
         
         maxOutputToken = maxOutputToken if maxOutputToken is not None else self.maxCharactersOutputs

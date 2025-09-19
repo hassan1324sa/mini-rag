@@ -78,7 +78,7 @@ async def indexProject(request:Request,projectId:str,searchReq:SearchReq):
 
 
 @nlpRouter.post("/index/answer/{projectId}")
-async def indexProject(request:Request,projectId:str,searchReq:SearchReq):
+async def answerRag(request:Request,projectId:str,searchReq:SearchReq):
     projectModel = await ProjectModel.createInstance(dbClient=request.app.db_client)
     project =  await projectModel.getProjectOrCreateOne(projectId=projectId)
     nlpController = NlpController(vectorDBclient=request.app.vectorDBClient,

@@ -17,9 +17,6 @@ class BaseController:
     def getDatabasePath(self,dbName):
         databasePath=os.path.join(self.databaseDir,dbName)
         if not os.path.exists(databasePath):
-<<<<<<< HEAD
             os.mkdir(path=databasePath)
-=======
             _ = os.makedirs(databasePath)
->>>>>>> 03fc06c (Initial commit)
         return databasePath

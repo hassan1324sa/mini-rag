@@ -8,8 +8,6 @@ class ResponseSignal(Enum):
     processingSuccess ="processing success"
     noFilesError = "files not found"
     fileIdError = "no file found with this id"
-<<<<<<< HEAD
-=======
     projectNotFound = "the project not found"
     insertIntoVectorDBError = "insert Into VectorDB Error"
     insertIntoVectorDBSuccess = "insert Into VectorDB success"
@@ -18,4 +16,3 @@ class ResponseSignal(Enum):
     vectorDBSearchError="vectorDBSearch Error"
     errorWhileAnswering="error While Answering"
     successAnswering="success Answering"
->>>>>>> 03fc06c (Initial commit)

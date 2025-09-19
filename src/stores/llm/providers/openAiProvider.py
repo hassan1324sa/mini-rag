@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 from llmInterface import LLmInterface
 from llmEnum import OpenAiEnum
-=======
 from ..llmInterface import LLmInterface
 from ..llmEnum import OpenAiEnum
->>>>>>> 03fc06c (Initial commit)
 from openai import OpenAI
 import logging
 
@@ -23,10 +20,7 @@ class OpenAiProvider(LLmInterface):
         self.embeddingModelId = None
         self.embeddingSize = None
         self.client = OpenAI(api_key=apiKey,api_url=apiUrl)
-<<<<<<< HEAD
-=======
         self.enums = OpenAiEnum
->>>>>>> 03fc06c (Initial commit)
         self.logger = logging.getLogger(__name__)
     
     def setGenerationModel(self, modelId):
