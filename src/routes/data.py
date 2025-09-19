@@ -116,7 +116,7 @@ async def processEndpoint(request:Request,projectId:str,processReq:ProcessReques
     if doReset==1:
         await chunkModel.deleteChunksByProjectId(projectId=project.id)
 
-
+    assetsIds= []
     for assetId,fileId in projectFilesIds.items():
         fileContent = processControllerObj.getFileContent(fileId)
         if fileContent is None :

@@ -9,7 +9,6 @@ class OpenAiEnum(Enum):
     USER = "user"
     ASSISTANT = "assistant"
 
-
 class CohereEnum(Enum):
     SYSTEM = "system"
     USER = "user"

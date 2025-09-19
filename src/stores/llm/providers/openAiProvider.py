@@ -1,5 +1,3 @@
-from llmInterface import LLmInterface
-from llmEnum import OpenAiEnum
 from ..llmInterface import LLmInterface
 from ..llmEnum import OpenAiEnum
 from openai import OpenAI

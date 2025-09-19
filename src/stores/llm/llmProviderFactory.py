@@ -1,5 +1,4 @@
-from llmEnum import LLMEnums
-from providers import openAiProvider, CohereProvider
+from .providers import openAiProvider, CohereProvider
 from .llmEnum import LLmEnums
 from .providers import openAiProvider, CohereProvider
 
@@ -17,7 +16,7 @@ class LLMProviderFactory:
                 temp=self.config.GENERATION_DAFAULT_TEMPERATURE
             )
 
-        if provider == LLMEnums.COHERE.value:
+        if provider == LLmEnums.COHERE.value:
             return CohereProvider(
                 apiKey = self.config.COHERE_API_KEY,
                 maxCharactersInputs=self.config.INPUT_DAFAULT_MAX_CHARACTERS,

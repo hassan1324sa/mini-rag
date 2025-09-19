@@ -1,5 +1,3 @@
-from llmInterface import LLmInterface
-from llmEnum import CohereEnum,DocumentTypeEnum
 from ..llmInterface import LLmInterface
 from ..llmEnum import CohereEnum,DocumentTypeEnum
 import cohere
@@ -44,7 +42,6 @@ class CohereProvider(LLmInterface):
         temp = temp if temp else self.temp
 
         chatHistory.append(self.constructPrompt(prompt=prompt,role=CohereEnum.USER.value))
-
         response = self.client.chat(
             model = self.generationModelId,
             chat_history= chatHistory,
@@ -77,8 +74,8 @@ class CohereProvider(LLmInterface):
 
 
 
-    def constructPrompt(self, prompt, role):
+    def constructPrompt(self, prompt: str, role):
         return {
-            "OpenAiEnum":role,
-            "prompt":self.processText(prompt)
+            "role": role,
+            "message": self.processText(prompt) 
         }

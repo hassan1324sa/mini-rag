@@ -25,7 +25,8 @@ async def indexProject(request:Request,projectId:str,pushReq:PushReq):
     
     nlpController = NlpController(vectorDBclient=request.app.vectorDBClient,
                                   generationClient=request.app.generationClient,
-                                  embeddingClient=request.app.embeddingClient)
+                                  embeddingClient=request.app.embeddingClient,
+                                  templateParser=request.app.templateParser)
     hasRecords = True
     pageNo =1 
     idx=0
@@ -52,7 +53,8 @@ async def indexProject(request:Request,projectId:str):
     project =  await projectModel.getProjectOrCreateOne(projectId=projectId)
     nlpController = NlpController(vectorDBclient=request.app.vectorDBClient,
                                   generationClient=request.app.generationClient,
-                                  embeddingClient=request.app.embeddingClient)
+                                  embeddingClient=request.app.embeddingClient,
+                                  templateParser=request.app.templateParser)
     collectionInfo = nlpController.getVectorDBcollectionInfo(project=project)
     return JSONResponse(content={"signal":ResponseSignal.insertIntoVectorDBSuccess.value,
                         "collection Info":collectionInfo

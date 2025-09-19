@@ -1,17 +1,8 @@
-<<<<<<< HEAD
-from vecotrDBInterface import VectorDBInterFace
-import logging
-from vectorDBEnum import DistanceMethodEnums
-from qdrant_client import QdrantClient,models
-
-=======
 from ..vecotrDBInterface import VectorDBInterFace
 import logging
 from ..vectorDBEnum import DistanceMethodEnums
 from qdrant_client import QdrantClient,models
 from models.dbSchemes import RetrieveDocs
->>>>>>> 03fc06c (Initial commit)
-
 class QdrantDB(VectorDBInterFace):
     def __init__(self,dbPath:str,distanceMethod:str):
         super().__init__()
@@ -19,15 +10,9 @@ class QdrantDB(VectorDBInterFace):
         self.dbPath = dbPath
 
         if distanceMethod == DistanceMethodEnums.COSINE.value:
-<<<<<<< HEAD
-            self.distance_method = models.Distance.COSINE
-        elif distanceMethod == DistanceMethodEnums.DOT.value:
-            self.distance_method = models.Distance.DOT
-=======
             self.distanceMethod = models.Distance.COSINE
         elif distanceMethod == DistanceMethodEnums.DOT.value:
             self.distanceMethod = models.Distance.DOT
->>>>>>> 03fc06c (Initial commit)
         self.logger = logging.getLogger(__name__)
     
     def connect(self):
@@ -52,11 +37,7 @@ class QdrantDB(VectorDBInterFace):
         if doReset:
             _ = self.deleteCollection(collectionName=collectionName)
         if not self.isCollectionExisted(collectionName=collectionName):
-<<<<<<< HEAD
-            _=self.client.create_collection(collection_name=collectionName,vectors_config=models.VectorParams(size=embeddingSize))
-=======
             _=self.client.create_collection(collection_name=collectionName,vectors_config=models.VectorParams(size=embeddingSize,distance=self.distanceMethod))
->>>>>>> 03fc06c (Initial commit)
             return True
         return False
     
@@ -68,11 +49,7 @@ class QdrantDB(VectorDBInterFace):
             _ = self.client.upload_records(
                 collection_name=collectionName,
                 records=[
-<<<<<<< HEAD
-                    models.Record(vector=vector,payload={"text":text,"metadata":metadata})
-=======
                     models.Record(vector=vector,payload={"text":text,"metadata":metadata},id=[recordId])
->>>>>>> 03fc06c (Initial commit)
                 ]
             )
         except Exception as e:
@@ -90,14 +67,9 @@ class QdrantDB(VectorDBInterFace):
             batchText = texts[i:batchEnd]
             batchVectors = vector[i:batchEnd]
             batchMetaData = metadata[i:batchEnd]
-<<<<<<< HEAD
-            batchRecords = [
-                models.Record(vector=batchVectors[x],payload={"text":batchText[x],"metadata":batchMetaData[x]})
-=======
             batchRecordsIds = recordIds[i:batchEnd]
             batchRecords = [
                 models.Record(id=batchRecordsIds[x],vector=batchVectors[x],payload={"text":batchText[x],"metadata":batchMetaData[x]})
->>>>>>> 03fc06c (Initial commit)
                 for x in range(len(batchText))
                 ]
             try:
@@ -107,10 +79,7 @@ class QdrantDB(VectorDBInterFace):
                 return False
         return True
     
-<<<<<<< HEAD
-    def searchByVector(self, collectionName, vector, limit):
-        return self.client.search(collection_name=collectionName,query_vector=vector,limit=limit)
-=======
+
     def searchByVector(self, collectionName, vector, limit=5):
         results = self.client.search(collection_name=collectionName,query_vector=vector,limit=limit)
         if not results or len(results) < 1 :
@@ -122,4 +91,3 @@ class QdrantDB(VectorDBInterFace):
                 })
             for i in results
         ]
->>>>>>> 03fc06c (Initial commit)
