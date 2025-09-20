@@ -17,7 +17,7 @@ class OpenAiProvider(LLmInterface):
         self.generationModelId = None
         self.embeddingModelId = None
         self.embeddingSize = None
-        self.client = OpenAI(api_key=apiKey,api_url=apiUrl)
+        self.client = OpenAI(api_key=apiKey, base_url=apiUrl)
         self.enums = OpenAiEnum
         self.logger = logging.getLogger(__name__)
     
@@ -35,10 +35,6 @@ class OpenAiProvider(LLmInterface):
     def generateText(self,chatHistory:list, prompt, maxOutputToken:int = None, temp:float=None):
         if not self.client:
             self.logger.error("openAI client was not set ")
-        
-        if not self.embeddingModelId:
-            self.logger.error("Model Id was not set ")
-        
         maxOutputToken = maxOutputToken if maxOutputToken is not None else self.maxCharactersOutputs
         temp = temp if temp else self.temp
 
@@ -76,6 +72,6 @@ class OpenAiProvider(LLmInterface):
 
     def constructPrompt(self, prompt, role):
         return {
-            "OpenAiEnum":role,
-            "prompt":self.processText(prompt)
+            "role":role,
+            "content":self.processText(prompt)
         }

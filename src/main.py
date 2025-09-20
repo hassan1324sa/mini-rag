@@ -19,7 +19,7 @@ async def startupSpan():
     vectorDBProviderFactory = VectorDBProviderFactory(settings) 
 
 
-    app.generationClient = llmProviderFactory.create(provider=settings.EMBEDDING_BACKEND)
+    app.generationClient = llmProviderFactory.create(provider=settings.GENERATION_BACKEND)
     app.generationClient.setGenerationModel(modelId=settings.GENERATION_MODEL_ID)
     app.embeddingClient = llmProviderFactory.create(provider=settings.EMBEDDING_BACKEND)
     app.embeddingClient.setEmbeddingModel(modelId=settings.EMBEDDING_MODEL_ID,embeddingSize=settings.EMBEDDING_MODEL_SIZE)
